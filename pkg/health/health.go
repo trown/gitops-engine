@@ -110,6 +110,8 @@ func GetResourceHealth(obj *unstructured.Unstructured, healthOverride HealthOver
 		}
 	case "argoproj.io":
 		switch gvk.Kind {
+		case "Application":
+			health = getApplicationHealth(obj)
 		case "Workflow":
 			health, err = getArgoWorkflowHealth(obj)
 		}

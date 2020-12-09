@@ -42,3 +42,9 @@ func getArgoWorkflowHealth(obj *unstructured.Unstructured) (*HealthStatus, error
 	}
 	return &HealthStatus{Status: HealthStatusHealthy, Message: wf.Status.Message}, nil
 }
+
+func getApplicationHealth(obj *unstructured.Unstructured) *HealthStatus {
+	status, _, _ := unstructured.NestedString(obj.Object, "status", "health", "status")
+	message, _, _ := unstructured.NestedString(obj.Object, "status", "health", "message")
+	return &HealthStatus{Status: HealthStatusCode(status), Message: message}
+}
